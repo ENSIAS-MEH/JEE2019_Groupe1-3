@@ -32,7 +32,7 @@
 				maxlength="20"> 
 			<span class="erreur">${form.erreurs['motdepasse']}</span>
 			<br/>
-			<button type="submit">Se connecter</button>
+			<button type="submit">se connecter</button>
 		</div>
 	</form>
 	<%@ include file="/includes/footer.jsp"%>
