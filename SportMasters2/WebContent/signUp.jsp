@@ -11,7 +11,7 @@
 	<%@ include file="/includes/header.jsp"%>
 	<h1
 		style="text-align: center; font-size: 50px; color: #000; margin-top: 50px;">Veuillez
-		SVP remplir la fiche d'inscription</h1>
+		SVP remplir la fiche d'insscription</h1>
 	<form class="modal-popup-content animate" action="#">
 		<div class="imgcontainer">
 			<img src="images/avatar.png" alt="Avatar" class="avatar">
