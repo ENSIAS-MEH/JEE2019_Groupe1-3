@@ -11,6 +11,7 @@
 <link href="bootstrap/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<%-- For tests !!  --%>
 	<div class="container">
 		<h1 class="text-center">Voici Nos Terrains</h1>
 		<hr>
