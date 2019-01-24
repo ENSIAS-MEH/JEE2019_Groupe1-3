@@ -11,7 +11,7 @@
 <link href="bootstrap/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<%-- For tests !!  --%>
+<%-- For tests !! ms je sais pas pq il ne marche pas !!  --%>
 	<div class="container">
 		<h1 class="text-center">Voici Nos Terrains</h1>
 		<hr>
