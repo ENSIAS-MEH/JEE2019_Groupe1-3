@@ -14,6 +14,7 @@ import dao.exceptions.DAOException;
 public class TerrainDaoImpl implements TerrainDao {
 	private DAOFactory daoFactory;
 	private static final String SQL_SELECT_TOUS_TERRAINS = "SELECT * FROM terrains ";
+	private static final String SQL_SELECT_TERRAIN_BY_ID = "SELECT * FROM terrains where id_terrain = ?";
 	// private static final String SQL_INSERT = "INSERT INTO utilisateur (email,
 	// mot_de_passe, nom, date_inscription) VALUES (?, ?, ?, NOW())";
 
@@ -59,6 +60,33 @@ public class TerrainDaoImpl implements TerrainDao {
 			return listeTerrains;
 		else
 			return null;
+	}
+
+	@Override
+	public Terrain getTerrain(int id_terrain) throws DAOException {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Terrain terrain = null;
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_TERRAIN_BY_ID, false, id_terrain);
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			while (resultSet.next()) {
+				terrain = new Terrain();
+				terrain.setId_terrain(resultSet.getInt("id_terrain"));
+				terrain.setDescription(resultSet.getString("description_terrain"));
+				terrain.setImage(resultSet.getString("image_terrain"));
+				terrain.setPrix(resultSet.getDouble("prix"));
+			}
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+		}
+		return terrain;
 	}
 
 }

@@ -16,7 +16,7 @@ import dao.exceptions.DAOException;
 public class ListLouerTerrainDaoImpl implements ListLouerTerrainDao {
 
 	private DAOFactory daoFactory;
-	private static final String SQL_SELECT = "SELECT  * FROM louerTerrain WHERE id_terrain = ? , id_date = ? ";
+	private static final String SQL_SELECT = "SELECT  * FROM louerTerrain WHERE id_terrain = ? AND id_date = ? ";
 
 	ListLouerTerrainDaoImpl(DAOFactory daoFactory) {
 		this.daoFactory = daoFactory;
@@ -35,10 +35,8 @@ public class ListLouerTerrainDaoImpl implements ListLouerTerrainDao {
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT, false, id_terrain, id_date);
 			resultSet = preparedStatement.executeQuery();
+			listLouerTerrain = map(resultSet);
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if (resultSet.next()) {
-				listLouerTerrain = map(resultSet);
-			}
 		} catch (SQLException e) {
 			throw new DAOException(e);
 		} finally {
@@ -52,16 +50,18 @@ public class ListLouerTerrainDaoImpl implements ListLouerTerrainDao {
 	private static ListLouerTerrain map(ResultSet resultSet) throws SQLException {
 		ListLouerTerrain listLouerTerrain = new ListLouerTerrain();
 		ArrayList<LouerTerrain> liste = new ArrayList<LouerTerrain>();
-
+		int count = 0;
 		while (resultSet.next()) {
 			LouerTerrain louerTerrain = new LouerTerrain();
 			louerTerrain.setId_utilisateur(resultSet.getInt("id_utilisateur"));
 			louerTerrain.setId_date(resultSet.getInt("id_date"));
 			louerTerrain.setId_terrain(resultSet.getInt("id_terrain"));
 			louerTerrain.setHeure(resultSet.getInt("heure"));
-
 			liste.add(louerTerrain);
+			count++;
 		}
+		if (count == 0)
+			return null;
 		listLouerTerrain.setList(liste);
 
 		return listLouerTerrain;

@@ -41,7 +41,7 @@
 						<c:when test="${!empty sessionScope.sessionUtilisateur}">
 							<a href="#connected" class="btn reserver-terrain">Reserver</a>
 						</c:when>
-					</c:choose> 
+					</c:choose>
 				</div>
 				<div id="modal-wrapper${terrain.id_terrain}" class="modal-popup">
 				<c:choose>
@@ -66,13 +66,15 @@
 						<h5 class="text-center">Prix: ${terrain.prix }MAD/heurer</h5>
 						<br />
 						
-						<c:set var="terrain" value="${terrain}" scope="session"/>
 						<%--
 						onclick="document.getElementById('ModalWrapper2${terrain.id_terrain}').style.display='block'" 
 						--%>
 						<%--<a type="submit" class="btn reserver-terrain" ${empty sessionScope.sessionUtilisateur ? 'onclick="myFunction()"' : 'onclick=""'} >Reeeserver</a>--%>
-						<input type="hidden">
+						<input type="hidden" id="id_terrain" name="id_terrain" value="${terrain.id_terrain }">
+						<%--<input type="submit" value="Reserver" class="btn reserver-terrain">
+						--%>
 						<button type="submit" ${empty sessionScope.sessionUtilisateur ? 'onclick="myFunction()"' : 'onclick=""'} >Reserver</button>
+						
 					</div>
 				</form>
 			</div>

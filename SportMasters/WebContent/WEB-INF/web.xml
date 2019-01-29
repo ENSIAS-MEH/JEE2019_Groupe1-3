@@ -55,7 +55,15 @@
     <servlet-name>Reserver</servlet-name>
     <url-pattern>/reserver</url-pattern>
   </servlet-mapping>
-  <listener>
+  <servlet>
+    <servlet-name>ConfirmerReservation</servlet-name>
+    <servlet-class>servlets.ConfirmerReservation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConfirmerReservation</servlet-name>
+    <url-pattern>/confirmerReservation</url-pattern>
+  </servlet-mapping>
+  <listener> 
     <listener-class>config.InitialisationDaoFactory</listener-class>
   </listener>
 </web-app>

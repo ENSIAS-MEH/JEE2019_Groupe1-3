@@ -15,12 +15,13 @@ import dao.ListLouerTerrainDao;
 import dao.TerrainDao;
 
 /**
- * Servlet implementation class Reserver
+ * Servlet implementation class ConfirmerReservation
  */
-@WebServlet("/Reserver")
-public class Reserver extends HttpServlet {
+@WebServlet("/ConfirmerReservation")
+public class ConfirmerReservation extends HttpServlet {
 	public static final String CONF_DAO_FACTORY = "daofactory";
-	public static final String VUE = "/WEB-INF/reserver.jsp";
+	public static final String VUE = "/WEB-INF/confirmerReservation.jsp";
+	public static final String VUE_SERVLET = "/reserver";
 	public static final String ID_TERRAIN_ATT = "id_terrain";
 	public static final String TERRAIN_ATT = "terrain";
 	public static final String ID_DATE_ATT = "id_date";
@@ -45,8 +46,7 @@ public class Reserver extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+		response.sendRedirect(getServletContext().getContextPath());
 	}
 
 	/**
@@ -59,17 +59,28 @@ public class Reserver extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 
-		String str_id_terrain = request.getParameter(ID_TERRAIN_ATT);
-		// String str_id_date = request.getParameter(ID_DATE_ATT);
-		Integer id_terrain = Integer.valueOf(str_id_terrain);
-		// Integer id_date = Integer.valueOf(str_id_date);
-		Terrain terrain = terrainDao.getTerrain(id_terrain.intValue());
-		// System.out.println("reserver : " + terrain.getId_terrain());
-		// ListLouerTerrain listLouerTerrain =
-		// listLouerTerrainDao.trouver(id_terrain.intValue(), id_date.intValue());
-		session.setAttribute(TERRAIN_ATT, terrain);
-		// session.setAttribute(LIST_LOUER_TERRAIN_ATT, listLouerTerrain);
-		this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+		// String str_id_terrain = request.getParameter(ID_TERRAIN_ATT);
+
+		String str_id_date = request.getParameter(ID_DATE_ATT);
+		if (str_id_date.equals("")) {
+			String erreur = "erreur!!!";
+			session.setAttribute("erreur_date", erreur);
+			System.out.println("voila : " + erreur);
+			response.sendRedirect(getServletContext().getContextPath() + VUE_SERVLET);
+
+		} else {
+			session.setAttribute("erreur_date", null);
+			// Integer id_terrain = Integer.valueOf(str_id_terrain);
+			Integer id_date = Integer.valueOf(str_id_date);
+			Terrain terrain = (Terrain) session.getAttribute(TERRAIN_ATT);
+			// System.out.println("voilaa id_terrain: " + terrain.getId_terrain());
+			// System.out.println("voilaa id_date : " + id_date.intValue());
+			ListLouerTerrain listLouerTerrain = listLouerTerrainDao.trouver(terrain.getId_terrain(),
+					id_date.intValue());
+			session.setAttribute(TERRAIN_ATT, terrain);
+			session.setAttribute(LIST_LOUER_TERRAIN_ATT, listLouerTerrain);
+			this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+		}
 	}
 
 }
