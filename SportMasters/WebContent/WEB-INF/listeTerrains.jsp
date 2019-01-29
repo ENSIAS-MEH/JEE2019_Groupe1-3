@@ -33,26 +33,68 @@
 					</div>
 					<h4 class="text-center">${terrain.description }</h4>
 					<h5 class="text-center">Prix: ${terrain.prix }MAD/heure</h5>
-					<a href="#" class="btn reserver-terrain">Reserver</a>
+					<c:choose>
+						<c:when test="${empty sessionScope.sessionUtilisateur}">
+							<c:set var="listeTerrains" value="true" scope="session" /> <%-- indiquer à la page connexion qu'on veut se rediriger vers la page de listeTerrains apres la connexion --%>
+							<a href="connexion" onclick="myFunction()" class="btn reserver-terrain">Reserver</a>
+						</c:when>
+						<c:when test="${!empty sessionScope.sessionUtilisateur}">
+							<a href="#connected" class="btn reserver-terrain">Reserver</a>
+						</c:when>
+					</c:choose> 
 				</div>
 				<div id="modal-wrapper${terrain.id_terrain}" class="modal-popup">
+				<c:choose>
+					<c:when test="${empty sessionScope.sessionUtilisateur}">
+						<c:set var="listeTerrains" value="true" scope="session" /> <%-- indiquer à la page connexion qu'on veut se rediriger vers la page de listeTerrains apres la connexion --%>
+						<form class="modal-popup-content animate" action="connexion" >
+					</c:when>
+					<c:when test="${!empty sessionScope.sessionUtilisateur}">
+						<form class="modal-popup-content animate" action="reserver" method="post">
+					</c:when>
+				</c:choose> 
+				<form class="modal-popup-content animate" action="reserver" method="post">
+					<div class="imgcontainer">
+						<span
+							onclick="document.getElementById('modal-wrapper${terrain.id_terrain}').style.display='none'"
+							class="close" title="Close PopUp">&times;</span> 
+							<img src="terrainsImages/${terrain.image}" alt="Avatar" class="avatar">
+						<h3 style="text-align: center">Infos terrain</h1>
+					</div>
+					<div class="container">
+						<h4 class="text-center">${terrain.description }</h4>
+						<h5 class="text-center">Prix: ${terrain.prix }MAD/heurer</h5>
+						<br />
+						
+						<c:set var="terrain" value="${terrain}" scope="session"/>
+						<%--
+						onclick="document.getElementById('ModalWrapper2${terrain.id_terrain}').style.display='block'" 
+						--%>
+						<%--<a type="submit" class="btn reserver-terrain" ${empty sessionScope.sessionUtilisateur ? 'onclick="myFunction()"' : 'onclick=""'} >Reeeserver</a>--%>
+						<input type="hidden">
+						<button type="submit" ${empty sessionScope.sessionUtilisateur ? 'onclick="myFunction()"' : 'onclick=""'} >Reserver</button>
+					</div>
+				</form>
+			</div>
+			<%--
+			<div id="modal-wrapper2${terrain.id_terrain}" class="modal-popup2"> 
 				<form class="modal-popup-content animate" action="#">
 					<div class="imgcontainer">
 						<span
 							onclick="document.getElementById('modal-wrapper${terrain.id_terrain}').style.display='none'"
 							class="close" title="Close PopUp">&times;</span> 
 							<img src="terrainsImages/${terrain.image}" alt="Avatar" class="avatar">
-						<h1 style="text-align: center">Modal Popup Box</h1>
+						<h3 style="text-align: center">Infos terrain</h1>
 					</div>
 					<div class="container">
 						<h4 class="text-center">${terrain.description }</h4>
 						<h5 class="text-center">Prix: ${terrain.prix }MAD/heurer</h5>
 						<br />
-						<button type="submit">Reserver</button>
+						<button type="submit" nclick="myFunction()" >Reserver</button>
 					</div>
 				</form>
 			</div>
-				
+			 --%>
 				<%-- ./terrain --%>
 			</c:forEach>
 		</div>
@@ -68,6 +110,9 @@
 					list[i].style.display = "none";
 				}
 			}
+		}
+		function myFunction() {
+			 alert("Connecter vous d'abord SVP!");
 		}
 	</script>
 </body>

@@ -16,6 +16,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 	private static final String SQL_SELECT_PAR_EMAIL = "SELECT id, email, nom, mot_de_passe FROM utilisateur WHERE email = ?";
 	private static final String SQL_SELECT_PAR_EMAIL_MOTDEPASSE = "SELECT * FROM utilisateur WHERE email = ? AND mot_de_passe = ? ";
 	private static final String SQL_INSERT = "INSERT INTO utilisateur (email, mot_de_passe, nom) VALUES (?, ?, ?)";
+	private static final String SQL_UPDATE_PASSWD = "UPDATE utilisateur mot_de_passe = ? , email = ? , nom = ? where id = ?";
 
 	UtilisateurDaoImpl(DAOFactory daoFactory) {
 		this.daoFactory = daoFactory;
@@ -115,6 +116,31 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 			fermeturesSilencieuses(resultSet, preparedStatement, connexion);
 		}
 		return result;
+	}
+
+	@Override
+	public void modifierInformations(Utilisateur utilisateur) throws DAOException {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet valeursAutoGenerees = null;
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee(connexion, SQL_UPDATE_PASSWD, false,
+					utilisateur.getMotDePasse(), utilisateur.getEmail(), utilisateur.getMotDePasse(),
+					utilisateur.getId());
+			int statut = preparedStatement.executeUpdate();
+			/* Analyse du statut retourné par la requête d'insertion */
+			if (statut == 0) {
+				throw new DAOException("Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table.");
+			}
+			/* Récupération de l'id auto-généré par la requête d'insertion */
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			fermeturesSilencieuses(valeursAutoGenerees, preparedStatement, connexion);
+		}
 	}
 
 }

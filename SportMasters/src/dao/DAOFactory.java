@@ -82,4 +82,8 @@ public class DAOFactory {
 		return new UtilisateurDaoImpl(this);
 	}
 
+	public ListLouerTerrainDao getListLouerTerrainDao() {
+		return new ListLouerTerrainDaoImpl(this);
+	}
+
 }

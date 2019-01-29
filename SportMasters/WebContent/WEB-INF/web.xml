@@ -23,7 +23,6 @@
     <servlet-name>ListeTerrains</servlet-name>
     <url-pattern>/listeTerrains</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>Inscription</servlet-name>
     <servlet-class>servlets.Inscription</servlet-class>
@@ -32,7 +31,6 @@
     <servlet-name>Inscription</servlet-name>
     <url-pattern>/inscription</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>Connexion</servlet-name>
     <servlet-class>servlets.Connexion</servlet-class>
@@ -41,7 +39,22 @@
     <servlet-name>Connexion</servlet-name>
     <url-pattern>/connexion</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <servlet-name>Deconnexion</servlet-name>
+    <servlet-class>servlets.Deconnexion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Deconnexion</servlet-name>
+    <url-pattern>/deconnexion</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Reserver</servlet-name>
+    <servlet-class>servlets.Reserver</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Reserver</servlet-name>
+    <url-pattern>/reserver</url-pattern>
+  </servlet-mapping>
   <listener>
     <listener-class>config.InitialisationDaoFactory</listener-class>
   </listener>

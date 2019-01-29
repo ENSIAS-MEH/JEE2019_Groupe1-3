@@ -31,16 +31,16 @@
 		<nav id="nav">
 			<a href="/SportMasters">Accueil</a> 
 			<a href="listeTerrains">Reservation</a> 
+			<a href="#footer_contact">Contact</a>
 			<c:choose>
 				<c:when test="${empty sessionScope.sessionUtilisateur}">
 					<a href="connexion">Se Connecter</a>
 				</c:when>
 				<c:when test="${!empty sessionScope.sessionUtilisateur}">
 					<a href="#">mon compte</a>
+					<a href="deconnexion" onclick="seDeconnecter()">Se deconnecter</a>
 				</c:when>
 			</c:choose>
-			
-			<a href="#footer_contact">Contact</a>
 		</nav>
 	</div>
 </header>

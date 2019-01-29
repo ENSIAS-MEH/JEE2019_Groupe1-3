@@ -10,4 +10,6 @@ public interface UtilisateurDao {
 	Utilisateur trouver(String email) throws DAOException;
 
 	boolean isCorrespondant(String email, String motDePasse) throws DAOException;
+
+	void modifierInformations(Utilisateur utilisateur) throws DAOException;
 }

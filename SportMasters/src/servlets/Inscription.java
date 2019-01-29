@@ -24,6 +24,8 @@ public class Inscription extends HttpServlet {
 	public static final String ATT_FORM = "form";
 	public static final String VUE = "/WEB-INF/inscription.jsp";
 	public static final String ATT_SESSION_USER = "sessionUtilisateur";
+	public static final String ATT_LISTETERRAINS = "listeTerrains";
+	public static final String VUE_LISTETERRAINS = "/listeTerrains";
 
 	private UtilisateurDao utilisateurDao;
 
@@ -63,7 +65,12 @@ public class Inscription extends HttpServlet {
 		/* Stockage du formulaire et du bean dans l'objet request */
 		if (form.getErreurs().isEmpty()) {
 			session.setAttribute(ATT_SESSION_USER, utilisateur);
-			response.sendRedirect(getServletContext().getContextPath());
+			if (session.getAttribute(ATT_LISTETERRAINS) != null) {
+				session.setAttribute(ATT_LISTETERRAINS, null);
+				response.sendRedirect(getServletContext().getContextPath() + VUE_LISTETERRAINS); // pour qu'on se trouve
+				// une autre fois dans la page listeTerrains
+			} else
+				response.sendRedirect(getServletContext().getContextPath());
 		} else {
 			request.setAttribute(ATT_FORM, form); // on fait passer la forme pour gérer les érreurs
 			request.setAttribute(ATT_USER, utilisateur);
